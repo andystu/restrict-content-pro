@@ -39,6 +39,7 @@ class RCP_Upgrades {
 		$this->v26_upgrades();
 		$this->v27_upgrades();
 		$this->v29_upgrades();
+		$this->v299_upgrades();
 
 		// If upgrades have occurred or the DB version is differnt from the version constant
 		if ( $this->upgraded || $this->version <> RCP_PLUGIN_VERSION ) {
@@ -137,6 +138,35 @@ class RCP_Upgrades {
 
 		}
 
+	}
+
+	/**
+	 * Process 2.9.9 upgrades.
+	 * Renames the payment_id column to rcp_payment_id in the payment meta table.
+	 *
+	 * @since 2.9.9
+	 */
+	private function v299_upgrades() {
+
+		if( version_compare( $this->version, '2.9.9', '<' ) ) {
+
+			$table_name = rcp_get_payment_meta_db_name();
+
+			rcp_log( sprintf( 'Performing version 2.9.9 upgrade: Renaming payment_id column to rcp_payment_id in the %s table.', $table_name ), true );
+
+			global $wpdb;
+
+			$updated = $wpdb->query( "ALTER TABLE {$table_name} CHANGE payment_id rcp_payment_id BIGINT(20) NOT NULL DEFAULT '0';" );
+
+			if( false === $updated ) {
+				rcp_log( sprintf( 'Error renaming the payment_id column in %s.', $table_name ), true );
+				return;
+			}
+
+			rcp_log( sprintf( 'Renaming payment_id to rcp_payment_id in %s was successful.', $table_name ), true );
+
+			$this->upgraded = true;
+		}
 	}
 
 
