@@ -39,7 +39,7 @@ class RCP_Upgrades {
 		$this->v26_upgrades();
 		$this->v27_upgrades();
 		$this->v29_upgrades();
-		$this->v299_upgrades();
+		$this->v2910_upgrades();
 
 		// If upgrades have occurred or the DB version is differnt from the version constant
 		if ( $this->upgraded || $this->version <> RCP_PLUGIN_VERSION ) {
@@ -141,14 +141,14 @@ class RCP_Upgrades {
 	}
 
 	/**
-	 * Process 2.9.9 upgrades.
+	 * Process 2.9.10 upgrades.
 	 * Renames the payment_id column to rcp_payment_id in the payment meta table.
 	 *
-	 * @since 2.9.9
+	 * @since 2.9.10
 	 */
-	private function v299_upgrades() {
+	private function v2910_upgrades() {
 
-		if( version_compare( $this->version, '2.9.9', '<' ) ) {
+		if( version_compare( $this->version, '2.9.10', '<' ) ) {
 
 			$table_name = rcp_get_payment_meta_db_name();
 
