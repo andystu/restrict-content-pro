@@ -119,7 +119,7 @@ function rcp_process_edit_member() {
 		wp_update_user( array( 'ID' => $user_id, 'user_email' => $email ) );
 	}
 
-	do_action( 'rcp_edit_member', $user_id );
+	do_action( 'rcp_edit_member', $user_id , $_POST );
 
 	rcp_log( sprintf( '%s finished editing member #%d.', $current_user->user_login, $user_id ) );
 
